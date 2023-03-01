@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "8083:80"
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/site.conf:/etc/nginx/conf.d/default.conf
+      - app-1:/var/www/app-1
+      - app-2:/var/www/app-2
+  app-1:
+    build:
+      context: app-1
+      dockerfile: Dockerfile
+    volumes:
+        - app-1:/app/build
+  app-2:
+    build:
+      context: app-2
+      dockerfile: Dockerfile
+    volumes:
+      - app-2:/app/build
+
+volumes:
+  app-1:
+  app-2:
+
